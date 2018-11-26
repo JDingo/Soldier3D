@@ -69,7 +69,7 @@ scene.add(ambientLight);
 // Model Loader
 function loadModel() {
     var loader = new THREE.GLTFLoader();
-    loader.load('http://localhost:8000/Model.gltf', function (gltf) {
+    loader.load('Model.gltf', function (gltf) {
 
         model = gltf.scene;
         model.animations = gltf.animations;
