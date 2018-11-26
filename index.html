@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Model Viewer</title>
+        <meta name="author" content="Juho Duong">
+        <link rel="stylesheet" href="style.css">
+
+        <script src="js/three.js"></script>
+        <script src="js/GLTFLoader.js"></script>
+        <script src="js/OrbitControls.js"></script>
+        <script src="js/viewer.js" defer></script>
+        <script src="js/intro.js" defer></script>
+    </head>
+    <body>
+        <header>
+            <h1>3D Model</h1>
+        </header>
+
+        <main>
+            <div id="viewer" class="viewer">
+            </div>
+
+            <div class="intro" id="intro">
+                <img src="Textures.png">
+                <div class="intro_text">
+                    <h1>Tervetuloa</h1>
+                    <input type="button" id="intro_button" value="OK" class="button"></input>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
