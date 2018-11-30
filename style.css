@@ -1,6 +1,7 @@
 html, body {
     height: 100%;
     margin: 0;
+    padding: 0;
 }
 
 h1 {
@@ -8,22 +9,26 @@ h1 {
 }
 
 header {
+    flex-shrink: 0;
     position: relative;
     background: #555555;
     box-shadow: 0px 0px 8px 2px rgba(0, 0, 0, 0.5);
     z-index: 1;
     height: 64px;
+    margin: 0;
 }
 
 .intro {
     position: absolute;
     bottom: 0%;
+    margin: 0;
 }
 
 .intro.transition{
     transition-duration: 1s;
     transition-timing-function: ease-in-out;
     bottom: 100%;
+    margin: 0;
 }
 
 .intro_text {
@@ -34,8 +39,18 @@ header {
     text-align: center;
 }
 
+.main {
+    display: flex;
+    flex-flow: column;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
 .viewer {
-    position: relative;
+    flex: auto;
     background-color: aliceblue;
-    height: 1%
+    margin: 0;
+    line-height: 0;
+    display: block;
+    height: 100%;
 }

@@ -6,11 +6,11 @@ var scene = new THREE.Scene();
 scene.background = new THREE.Color().setHSL(0.6, 0, 1);
 scene.fog = new THREE.Fog(scene.background, 1, 5000);
 
-var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+var camera = new THREE.PerspectiveCamera(60, canvas.offsetWidth / canvas.offsetHeight, 0.1, 1000);
 camera.position.set(2, 2, 1);
 
 var renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth/2, window.innerHeight/2);
+renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 renderer.gammaOutput = true;
 renderer.gammaFactor = 3.2;
 renderer.shadowMap.enabled = true;
@@ -87,10 +87,34 @@ function loadModel() {
     );
 }
 
+/* window.addEventListener('resize', reSize, false);
+
+function reSize() {
+    renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
+    camera.aspe
+    console.log('CHANGE');
+    console.log(canvas.offsetWidth);
+}*/
+
+function reSizeCanvas() {
+    var canvas = document.getElementById('viewer');
+    var width = canvas.clientWidth;
+    var height = canvas.clientHeight;
+    console.log(width, height);
+
+    camera.aspect = width / height;
+    camera.updateProjectionMatrix();
+    renderer.setSize(width, height);
+    console.log("Canvas Resized!")
+}
+
 function animate() {
     timeDelta = clock.getDelta();
     mixer.update(timeDelta);
 
+    console.log("Render")
+
+    reSizeCanvas();
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 };

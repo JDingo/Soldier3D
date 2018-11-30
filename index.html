@@ -13,21 +13,24 @@
         <script src="js/intro.js" defer></script>
     </head>
     <body>
-        <header>
-            <h1>3D Model</h1>
-        </header>
-
-        <main>
+        <div class="intro" id="intro">
+            <img src="Textures.png">
+            <div class="intro_text">
+                <h1>Tervetuloa</h1>
+                <input type="button" id="intro_button" value="OK" class="button"></input>
+            </div>
+        </div>
+    
+        <main class="main">
+            <header>
+                <h1>3D Model</h1>
+            </header>
+    
             <div id="viewer" class="viewer">
             </div>
-
-            <div class="intro" id="intro">
-                <img src="Textures.png">
-                <div class="intro_text">
-                    <h1>Tervetuloa</h1>
-                    <input type="button" id="intro_button" value="OK" class="button"></input>
-                </div>
-            </div>
+    
+    
         </main>
     </body>
+    
 </html>
