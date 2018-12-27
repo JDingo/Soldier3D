@@ -11,14 +11,18 @@ camera.position.set(2, 2, 1);
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(canvas.clientWidth, canvas.clientHeight);
+renderer.physicallyCorrectLights = true;
 renderer.gammaOutput = true;
 renderer.gammaFactor = 3.2;
 renderer.shadowMap.enabled = true;
+renderer.setClearColor(0xcccccc);
 canvas.appendChild(renderer.domElement);
 
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1, 0);
 controls.update();
+
+var envMap = new THREE.MeshBasicMaterial;
 
 // Ground
 var groundGeo = new THREE.PlaneBufferGeometry(10000, 10000);
@@ -63,7 +67,7 @@ var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
 hemiLight.position.set(0, 10, 0);
 scene.add(hemiLight);
 
-var ambientLight = new THREE.AmbientLight(0x404040);
+var ambientLight = new THREE.AmbientLight(0x404040, 5);
 scene.add(ambientLight);
 
 // Model Loader
@@ -73,6 +77,17 @@ function loadModel() {
 
         model = gltf.scene;
         model.animations = gltf.animations;
+
+        model.traverse( function (child) {
+            if (child instanceof THREE.Mesh) {
+                child.castShadow = true;
+                child.geometry.computeFaceNormals();
+                child.geometry.computeVertexNormals(true);
+                child.geometry.normalsNeedUpdate = true;
+                child.material.shading = THREE.SmoothShading;
+            }
+        } );
+
         scene.add(model);
 
         mixer = new THREE.AnimationMixer(model);
@@ -87,14 +102,7 @@ function loadModel() {
     );
 }
 
-/* window.addEventListener('resize', reSize, false);
-
-function reSize() {
-    renderer.setSize(canvas.offsetWidth, canvas.offsetHeight)
-    camera.aspe
-    console.log('CHANGE');
-    console.log(canvas.offsetWidth);
-}*/
+window.addEventListener('resize', reSizeCanvas, false);
 
 function reSizeCanvas() {
     var canvas = document.getElementById('viewer');
@@ -114,7 +122,6 @@ function animate() {
 
     console.log("Render")
 
-    reSizeCanvas();
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 };
