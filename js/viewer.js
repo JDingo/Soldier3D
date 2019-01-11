@@ -56,16 +56,6 @@ function loadModel() {
         model = gltf.scene;
         model.animations = gltf.animations;
 
-        model.traverse( function (child) {
-            if (child instanceof THREE.Mesh) {
-                child.castShadow = true;
-                child.geometry.computeFaceNormals();
-                child.geometry.computeVertexNormals(true);
-                child.geometry.normalsNeedUpdate = true;
-                child.material.shading = THREE.SmoothShading;
-            }
-        } );
-
         scene.add(model);
 
         mixer = new THREE.AnimationMixer(model);
