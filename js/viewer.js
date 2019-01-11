@@ -22,32 +22,10 @@ var controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1, 0);
 controls.update();
 
-var envMap = new THREE.MeshBasicMaterial;
-
-// Ground
-var groundGeo = new THREE.PlaneBufferGeometry(10000, 10000);
-var groundMat = new THREE.MeshPhongMaterial({ color: 0xffffff, specular: 0x050505 });
-groundMat.color.setHSL(0.095, 1, 0.75);
-var ground = new THREE.Mesh(groundGeo, groundMat);
-ground.rotation.x = - Math.PI / 2;
-ground.position.y = - 0.02;
-ground.receiveShadow = true;
-scene.add(ground);
-
-
-// Sky
-var skyGeo = new THREE.SphereBufferGeometry(100, 100, 100);
-var skyMat = new THREE.MeshPhongMaterial( { color: 0x66ccff } );
-skyMat.side = THREE.DoubleSide;
-var sky = new THREE.Mesh( skyGeo, skyMat );
-scene.add(sky);
-
 // Lightning 
 var dirLightFront = new THREE.DirectionalLight(0xFFFFFF);
 dirLightFront.color.setHSL(0.1, 1, 0.95);
 dirLightFront.position.set(-1, 1.75, 1);
-dirLightFront.position.multiplyScalar(30);
-dirLightFront.castShadow = true;
 scene.add(dirLightFront);
 
 dirLightHelperFront = new THREE.DirectionalLightHelper(dirLightFront, 10);
@@ -67,7 +45,7 @@ var hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.6);
 hemiLight.position.set(0, 10, 0);
 scene.add(hemiLight);
 
-var ambientLight = new THREE.AmbientLight(0x404040, 5);
+var ambientLight = new THREE.AmbientLight(0x404040, 1);
 scene.add(ambientLight);
 
 // Model Loader
@@ -91,8 +69,9 @@ function loadModel() {
         scene.add(model);
 
         mixer = new THREE.AnimationMixer(model);
-        mixer.clipAction('Action').play()
+        mixer.clipAction('idle').play()
         console.log(mixer);
+        reSizeCanvas();
         animate();
     },
 
