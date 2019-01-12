@@ -1,3 +1,4 @@
+// Set canvas as the space where 3D renderer will be implemented
 var canvas = document.getElementById('viewer');
 
 var clock = new THREE.Clock();
@@ -6,9 +7,11 @@ var scene = new THREE.Scene();
 scene.background = new THREE.Color().setHSL(0.6, 0, 1);
 scene.fog = new THREE.Fog(scene.background, 1, 5000);
 
+// Camera
 var camera = new THREE.PerspectiveCamera(60, canvas.offsetWidth / canvas.offsetHeight, 0.1, 1000);
 camera.position.set(2, 2, 1);
 
+// Set up canvas and renderer
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 renderer.physicallyCorrectLights = true;
@@ -18,6 +21,7 @@ renderer.shadowMap.enabled = true;
 renderer.setClearColor(0xcccccc);
 canvas.appendChild(renderer.domElement);
 
+// Camera controls
 var controls = new THREE.OrbitControls(camera, renderer.domElement);
 controls.target.set(0, 1, 0);
 controls.update();
@@ -48,6 +52,13 @@ scene.add(hemiLight);
 var ambientLight = new THREE.AmbientLight(0x404040, 1);
 scene.add(ambientLight);
 
+// List of actions
+var animList = ['idle', 'walk', 'run', 'fire']
+var animIndex = 0;
+
+var model;
+var mixer;
+
 // Model Loader
 function loadModel() {
     var loader = new THREE.GLTFLoader();
@@ -56,23 +67,21 @@ function loadModel() {
         model = gltf.scene;
         model.animations = gltf.animations;
 
+        // Add model to 3D scene
         scene.add(model);
 
+        // Play 'idle' using the Threejs animation system
         mixer = new THREE.AnimationMixer(model);
-        mixer.clipAction('idle').play()
-        console.log(mixer);
+        mixer.clipAction(animList[animIndex]).play();
         reSizeCanvas();
-        animate();
-    },
-
-        undefined, function (e) {
-            console.error(e);
-        }
-    );
+        animate(model);
+    } );
 }
 
 window.addEventListener('resize', reSizeCanvas, false);
+window.addEventListener('dblclick', updateAnimation, false);
 
+// Resize canvas incase of browser resize
 function reSizeCanvas() {
     var canvas = document.getElementById('viewer');
     var width = canvas.clientWidth;
@@ -85,11 +94,23 @@ function reSizeCanvas() {
     console.log("Canvas Resized!")
 }
 
+// Update animation on double-click
+function updateAnimation () {
+    if (animIndex == animList.length - 1) {
+        animIndex = 0;
+    } else {
+        animIndex++;
+    };
+
+    console.log(animIndex);
+    mixer = new THREE.AnimationMixer(model);
+    mixer.clipAction(animList[animIndex]).play();
+};
+
+// Animate next frame
 function animate() {
     timeDelta = clock.getDelta();
     mixer.update(timeDelta);
-
-    console.log("Render")
 
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
