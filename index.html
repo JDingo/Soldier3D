@@ -14,20 +14,35 @@
         <script src="js/intro.js" defer></script>
     </head>
     <body>
-        <div class="intro" id="intro">
-            <img src="Textures_Body.png">
-            <div class="intro_text">
-                <h1>Tervetuloa</h1>
-                <input type="button" id="intro_button" value="OK" class="button"></input>
-            </div>
-        </div>
-    
         <main class="main">
             <header>
                 <div class="headertext">
                     <h1 class="headertitle">3D Model</h1>
                 </div>
             </header>
+
+            <div class="intro" id="intro">
+                <img src="introcard.png">
+                <div class="intro_text">
+                    <h1>Tervetuloa</h1>
+
+                    <br>
+
+                    <p>Tämän työn aiheena on 3D-hahmon luominen. Hahmo perustuu toisen maailmansodan aikaiseen suomalaiseen sotilaaseen.</p>
+                    <p>Sotilaan mallintamisessa on käytetty referenssikuvia esimerkiksi Petteri Leinon kirjasta Asepuku m/36.</p>
+                    <p>Hahmo on luotu Blenderin avulla, ja sivu toteutettu JavaScriptille saatavaa Three.js-kirjastoa käyttäen.</p>
+
+                    <br>
+
+                    <p>Kamerakulmaa voi vaihtaa painamalla vasenta hiirinäppäintä ja liikuttamalla hiirtä. Kameraa voi liikuttaa painamalla lisäksi Ctrl-näppäintä pohjassa. </p>
+                    <p>Hahmon animaatioita voi vaihtaa tuplaklikkaamalla.</p>
+
+                    <br>
+
+                    <p>Työn tekijä on Juho Duong. Työ löytyy myös <a href="https://github.com/JDingo/Soldier3D" target="_blank">GitHubista.</a></p>
+                    <input type="button" id="intro_button" value="OK" class="button"></input>
+                </div>
+            </div>
     
             <div id="viewer" class="viewer">
             </div>
